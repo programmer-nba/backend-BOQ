@@ -39,6 +39,8 @@ app.use(prefix+'/type',require('./routes/type'));
 app.use(prefix+'/unit',require('./routes/unit'));
 //เพิ่มสินค้า
 app.use(prefix+'/product',require('./routes/product'));
+//เพิ่มใบประมาณสินค้า
+app.use(prefix+'/quotation',require('./routes/quotation'));
 ////
 
 
