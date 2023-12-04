@@ -9,6 +9,8 @@ const jwt = require("jsonwebtoken");
 router.post('/',adminAuth,Admin.add)
 //login
 router.post('/login/',Admin.login)
+//me
+router.get('/me/',adminAuth,Admin.me)
 //ดึงข้อมูลทั้งหมด
 router.get('/',adminAuth,Admin.getall)
 //ดึงข้อมูล by id

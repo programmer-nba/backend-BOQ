@@ -28,6 +28,11 @@ app.use(cor())
 const prefix = '/v1/Backend-BOQ'
 app.use(prefix+'/', require('./routes/index'));
 app.use(prefix+'/admin',require('./routes/admin'));
+app.use(prefix+'/employee',require('./routes/employee'));
+app.use(prefix+'/pic',require('./routes/picsignature'));
+////
+
+
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*'); // หรือกำหนด origin ที่เฉพาะเจาะจง
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
