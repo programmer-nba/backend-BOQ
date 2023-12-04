@@ -27,9 +27,15 @@ app.use(cor())
 //router
 const prefix = '/v1/Backend-BOQ'
 app.use(prefix+'/', require('./routes/index'));
+//ข้อมูล admin
 app.use(prefix+'/admin',require('./routes/admin'));
+//ข้อมูลพนักงาน
 app.use(prefix+'/employee',require('./routes/employee'));
+//เพิ่มรูป
 app.use(prefix+'/pic',require('./routes/picsignature'));
+//เพิ่มประเภทสินค้า
+app.use(prefix+'/type',require('./routes/type'));
+
 ////
 
 
