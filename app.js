@@ -35,7 +35,10 @@ app.use(prefix+'/employee',require('./routes/employee'));
 app.use(prefix+'/pic',require('./routes/picsignature'));
 //เพิ่มประเภทสินค้า
 app.use(prefix+'/type',require('./routes/type'));
-
+//เพิ่มหน่วยของสินค้า
+app.use(prefix+'/unit',require('./routes/unit'));
+//เพิ่มสินค้า
+app.use(prefix+'/product',require('./routes/product'));
 ////
 
 

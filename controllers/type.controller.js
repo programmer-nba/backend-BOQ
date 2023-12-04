@@ -74,8 +74,8 @@ module.exports.delete = async (req,res) =>{
         if(!typedata){
             return res.status(404).send({status:false,message:"ไม่มีข้อมูลประเภทสินค้า"})
         }
-        const deletetype = await Admin.findByIdAndDelete(req.params.id)
-        return res.status(200).send({status:true,data:deletetype})
+        const deletetype = await Type.findByIdAndDelete(req.params.id)
+        return res.status(200).send({status:true,message:"ลบข้อมูลสำเร็จ",data:deletetype})
     }catch (error) {
         return res.status(500).send({status:false,error:error.message});
     }
