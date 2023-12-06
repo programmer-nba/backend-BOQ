@@ -61,35 +61,20 @@ module.exports.getbyid = async (req,res) =>{
     }
 }
 //ยังไม่ได้ทำ
-//แก้ไขข้อมูล product
+//แก้ไขข้อมูลใบประมาณราคา
 module.exports.edit = async (req,res) =>{
     try{    
-       
-        if(req.body.productname=== undefined || req.body.productname ==='')
-        {
-            res.status(400).send({status:false,message:"กรุณากรอกชื่อสินค้า"});
-        }
-        const type = await Type.findById(req.body.type_id)
-        if(!type)
-        {
-            res.status(400).send({status:false,message:"กรุณากรอกชื่อประเภทสินค้า หรือ หาไม่เจอ"});
-        }
-        const unit = await Unit.findById(req.body.unit_id)
-        if(!unit)
-        {
-            res.status(400).send({status:false,message:"กรุณากรอกชื่อหน่วยสินค้า หรือ หาไม่เจอ"});
-        }
-        const product = await Product.findOne({_id:req.params.id})
-        if(!product)
-        {
-            return res.status(404).send({status:false,message:"ไม่มีข้อมูลสินค้า"})
-        }
+
         const data ={
-            productname:req.body.name,// (ชื่อสินค้า)
-            type_id:req.body.type_id, // (รหัสประเภท)  // join กับ type 
-            unit_id: req.body.unit_id //(หน่วย) // join กับ unit 
+            projectname:req.body.projectname, //(ชื่อโครงการ)
+            projectowner:req.body.projectowner, //(เจ้าของโครงการ)
+            constructionsite:req.body.constructionsite,//(สถานที่ก่อสร้าง)
+            materialcostandwage: req.body.materialcostandwage, // (ค่าวัสดุ + ค่าแรง)
+            admincost : req.body.admincost,// (ค่าดำเนินการ)
+            total: req.body.total,//(ราคารวมทั้งหมด)
+            listproduct: req.body.listproduct
         }
-        const edit = await Product.findByIdAndUpdate(req.params.id,data,{new:true})
+        const edit = await Quotation.findByIdAndUpdate(req.params.id,data,{new:true})
         return res.status(200).send({status:true,data:edit,message:"แก้ไขข้อมูลสำเร็จ"})
     }catch (error) {
         return res.status(500).send({status:false,error:error.message});
@@ -99,12 +84,12 @@ module.exports.edit = async (req,res) =>{
 //ลบข้อมูลสินค้า
 module.exports.delete = async (req,res) =>{
     try{    
-        const productdata = await Product.findOne({_id:req.params.id})
-        if(!productdata){
-            return res.status(404).send({status:false,message:"ไม่มีข้อมูลสินค้า"})
+        const quotationdata = await Quotation.findOne({_id:req.params.id})
+        if(!quotationdata){
+            return res.status(404).send({status:false,message:"ไม่มีข้อมูลใบประมาณราคา"})
         }
-        const deleteproduct = await Product.findByIdAndDelete(req.params.id)
-        return res.status(200).send({status:true,message:"ลบข้อมูลสำเร็จ",data:deleteproduct})
+        const deletequotation = await Quotation.findByIdAndDelete(req.params.id)
+        return res.status(200).send({status:true,message:"ลบข้อมูลสำเร็จ",data:deletequotation})
     }catch (error) {
         return res.status(500).send({status:false,error:error.message});
     }
