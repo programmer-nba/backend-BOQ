@@ -42,7 +42,7 @@ app.use(prefix+'/product',require('./routes/product'));
 //เพิ่มใบประมาณสินค้า
 app.use(prefix+'/quotation',require('./routes/quotation'));
 ////
-
+app.use(prefix+'/login', require('./routes/login'))
 
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*'); // หรือกำหนด origin ที่เฉพาะเจาะจง
