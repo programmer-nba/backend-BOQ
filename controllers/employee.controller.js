@@ -1,6 +1,7 @@
 const Employee = require('../models/employee.schema')
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken");
+const {uploadFileCreate,deleteFile} = require('../functions/uploadfilecreate');
 //สร้างไอดี Employee
 module.exports.add = async (req, res) => {
     try {
@@ -133,6 +134,16 @@ module.exports.edit = async (req,res) =>{
         {
             return res.status(404).send({status:false,message:"ไม่มีข้อมูล Employee"})
         }
+        const changesignature = (req.body.changesignature!= undefined && req.body.changesignature!=""? req.body.changesignature:false)
+        if(changesignature === true)
+        { 
+            if(employee.signature!='')
+            {
+                await deleteFile(employee.signature);  
+                const deletesignature =await Employee.findByIdAndUpdate(req.params.id,{signature:""})
+            }
+        }
+
         const data ={
             username: req.body.username,
             password: ( req.body.password!= undefined && req.body.password!= ""? bcrypt.hashSync(req.body.password, 10):employee.password),
