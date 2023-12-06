@@ -1,7 +1,7 @@
 const Product = require('../models/product.schema')
 const Type =require('../models/type.schema')
 const Unit = require('../models/unit.schema')
-const Quotation = require('../models/Quotation.schema')
+const Quotation = require('../models/Quotation.schema');
 //สร้างใบประมาณราคา
 module.exports.add = async (req, res) => {
     try {
@@ -64,7 +64,15 @@ module.exports.getbyid = async (req,res) =>{
 //แก้ไขข้อมูลใบประมาณราคา
 module.exports.edit = async (req,res) =>{
     try{    
-
+        if(!req.params.id ||req.params.id ===''||req.params.id === undefined)
+        {
+            return res.status(400).send({status:false,message:"กรุณาส่ง id มาด้วย"})
+        }
+        const quotation = await Quotation.findOne({_id:req.params.id})
+        if(!quotation)
+        {
+            return res.status(400).send({status:false,message:"ไม่มี id นี้ในฐานข้อมูล"})
+        }
         const data ={
             projectname:req.body.projectname, //(ชื่อโครงการ)
             projectowner:req.body.projectowner, //(เจ้าของโครงการ)
@@ -74,6 +82,7 @@ module.exports.edit = async (req,res) =>{
             total: req.body.total,//(ราคารวมทั้งหมด)
             listproduct: req.body.listproduct
         }
+        console.log("test")
         const edit = await Quotation.findByIdAndUpdate(req.params.id,data,{new:true})
         return res.status(200).send({status:true,data:edit,message:"แก้ไขข้อมูลสำเร็จ"})
     }catch (error) {
