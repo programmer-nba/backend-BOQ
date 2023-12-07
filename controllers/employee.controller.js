@@ -112,6 +112,10 @@ module.exports.delete = async (req,res) =>{
         if(!employeedata){
             return res.status(404).send({status:false,message:"ไม่มีข้อมูล Employee"})
         }
+        if(employeedata.signature!='')
+        {
+            await deleteFile(employeedata.signature);
+        }
         const deleteemployee = await Employee.findByIdAndDelete(req.params.id)
         return res.status(200).send({status:true,message:"ลบข้อมูลสำเร็จ",data:deleteemployee})
     }catch (error) {
