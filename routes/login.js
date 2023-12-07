@@ -22,6 +22,12 @@ router.post('/', async(req,res)=>{
         const [checksignin,roles] = await checklogin(username,password).then((data)=>{
             return data
           })
+          if(checksignin === "คุณกรอกรหัสไม่ถูกต้อง"){
+            return res.status(400).send({ status: false, message: "คุณกรอกรหัสไม่ถูกต้อง" });
+          } else if(checksignin === "Invalid Password"){
+            return res.status(500).send({ status: false, message: "พาสเวิร์ดไม่ถูกต้อง Password" })
+          }
+
          //สร้าง signaturn
          const payload = {
           _id:checksignin._id,
@@ -63,7 +69,7 @@ async function checklogin(username,password){
     const Admindata = await Admin.findOne({username:username})
     const Employeedata = await Employee.findOne({username:username})
     // เช็คค่า Member มีหรือเปล่า
-    if(Employeedata){
+    if(Employeedata != null){
         //เช็คค่า password ว่าในฐานข้อมูลตรงกันหรือเปล่า
        bcryptpassword = await bcrypt.compare(password,Employeedata.password)
   
@@ -73,7 +79,7 @@ async function checklogin(username,password){
         else{
           return ["Invalid Password",""]
         }
-    }else if(Admindata){
+    }else if(Admindata!= null){
       bcryptpassword = await bcrypt.compare(password,Admindata.password)
         if(bcryptpassword){
           return [Admindata,"admin"]
