@@ -13,15 +13,9 @@ module.exports.add = async (req, res) => {
         {
             res.status(400).send({status:false,message:"กรุณากรอกชื่อประเภทสินค้า หรือ หาไม่เจอ"});
         }
-        const unit = await Unit.findById(req.body.unit_id)
-        if(!unit)
-        {
-            res.status(400).send({status:false,message:"กรุณากรอกชื่อหน่วยสินค้า หรือ หาไม่เจอ"});
-        }
         const data = new Product({
             productname:req.body.productname,// (ชื่อสินค้า)
             type_id:req.body.type_id, // (รหัสประเภท)  // join กับ type 
-            unit_id: req.body.unit_id //(หน่วย) // join กับ unit 
         })
         const add = await data.save()
         res.status(200).send({status:true,message:"คุณได้สร้างสินค้าเรียบร้อย",data:add});
@@ -33,7 +27,7 @@ module.exports.add = async (req, res) => {
 //ดึงข้อมูลทั้งหมด
 module.exports.getall = async (req,res) =>{
     try{    
-        const productdata = await Product.find().populate('type_id').populate('unit_id')
+        const productdata = await Product.find().populate('type_id')
         if(!productdata){
             return res.status(404).send({status:false,message:"ไม่มีข้อมูลสินค้า"})
         }
@@ -46,7 +40,7 @@ module.exports.getall = async (req,res) =>{
 //ดึงข้อมูล by id
 module.exports.getbyid = async (req,res) =>{
     try{    
-        const productdata = await Product.findOne({_id:req.params.id}).populate('type_id').populate('unit_id')
+        const productdata = await Product.findOne({_id:req.params.id}).populate('type_id')
         if(!productdata){
             return res.status(404).send({status:false,message:"ไม่มีข้อมูลสินค้า"})
         }
@@ -69,11 +63,6 @@ module.exports.edit = async (req,res) =>{
         {
             res.status(400).send({status:false,message:"กรุณากรอกชื่อประเภทสินค้า หรือ หาไม่เจอ"});
         }
-        const unit = await Unit.findById(req.body.unit_id)
-        if(!unit)
-        {
-            res.status(400).send({status:false,message:"กรุณากรอกชื่อหน่วยสินค้า หรือ หาไม่เจอ"});
-        }
         const product = await Product.findOne({_id:req.params.id})
         if(!product)
         {
@@ -82,7 +71,6 @@ module.exports.edit = async (req,res) =>{
         const data ={
             productname:req.body.name,// (ชื่อสินค้า)
             type_id:req.body.type_id, // (รหัสประเภท)  // join กับ type 
-            unit_id: req.body.unit_id //(หน่วย) // join กับ unit 
         }
         const edit = await Product.findByIdAndUpdate(req.params.id,data,{new:true})
         return res.status(200).send({status:true,data:edit,message:"แก้ไขข้อมูลสำเร็จ"})

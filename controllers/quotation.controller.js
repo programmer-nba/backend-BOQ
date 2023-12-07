@@ -29,10 +29,9 @@ module.exports.getall = async (req,res) =>{
         const quotationdata = await Quotation.find().populate('employee_id').populate({ 
             path: "listproduct.product_id", 
             populate: [
-              { path: "unit_id" },
               { path: "type_id" } 
             ]
-          });
+          }).populate({path: "listproduct.unit_id"});
         if(!quotationdata){
             return res.status(404).send({status:false,message:"ไม่มีข้อมูลใบประมาณราคา"})
         }
@@ -51,7 +50,7 @@ module.exports.getbyid = async (req,res) =>{
               { path: "unit_id" },
               { path: "type_id" } 
             ]
-          });
+          }).populate({path: "listproduct.unit_id"});
         if(!quotationdata){
             return res.status(404).send({status:false,message:"ไม่มีข้อมูลใบประมาณราคา"})
         }

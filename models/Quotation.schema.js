@@ -10,7 +10,8 @@ const QuotationSchema = new mongoose.Schema(
     listproduct: {
         type:[
             {
-                product_id:{type: mongoose.Schema.Types.ObjectId,ref:'product',required:true}, //รหัสสินค้า
+                product_id:{type: mongoose.Schema.Types.ObjectId,ref:'product'}, //รหัสสินค้า
+                unit_id:{type:mongoose.Schema.Types.ObjectId,ref:'type'},
                 quantity:{type:Number},// จำนวน
                 materialprice:{type:Number}, // ราคาต่อชิ้น (สินค้า)
                 materialamount:{type:Number}, // ราคารวม (สินค้า)
