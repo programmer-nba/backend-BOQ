@@ -10,11 +10,11 @@ router.post('/', async(req,res)=>{
     try {
         if(req.body.username === undefined || req.body.username ==='')
         {
-            return res.status(400).send({ status: false, message: "กรุณากรอก username" })
+            return res.status(200).send({ status: false, message: "กรุณากรอก username" })
         }
         if(req.body.password === undefined || req.body.password ==='')
         {
-            return res.status(400).send({ status: false, message: "กรุณากรอก password" })
+            return res.status(200).send({ status: false, message: "กรุณากรอก password" })
         }
         const username = req.body.username
         const password = req.body.password
@@ -23,9 +23,9 @@ router.post('/', async(req,res)=>{
             return data
           })
           if(checksignin === "คุณกรอกรหัสไม่ถูกต้อง"){
-            return res.status(400).send({ status: false, message: "คุณกรอกรหัสไม่ถูกต้อง" });
+            return res.status(200).send({ status: false, message: "คุณกรอกรหัสไม่ถูกต้อง" });
           } else if(checksignin === "Invalid Password"){
-            return res.status(500).send({ status: false, message: "พาสเวิร์ดไม่ถูกต้อง Password" })
+            return res.status(200).send({ status: false, message: "พาสเวิร์ดไม่ถูกต้อง Password" })
           }
 
          //สร้าง signaturn
