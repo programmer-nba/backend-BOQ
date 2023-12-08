@@ -8,15 +8,15 @@ module.exports.add = async (req, res) => {
     try {
         if(req.body.username=== undefined || req.body.username ==='')
         {
-            res.status(400).send({status:false,message:"กรุณากรอก username"});
+            res.status(200).send({status:false,message:"กรุณากรอก username"});
         }
         if(req.body.password=== undefined || req.body.password === '')
         {
-            res.status(400).send({status:false,message:"กรุณากรอก password"});
+            res.status(200).send({status:false,message:"กรุณากรอก password"});
         }
         if(req.body.name=== undefined || req.body.name ==='')
         {
-            res.status(400).send({status:false,message:"กรุณากรอก name"});
+            res.status(200).send({status:false,message:"กรุณากรอก name"});
         }
 
          //เช็คชื่อซ้ำ
@@ -24,7 +24,7 @@ module.exports.add = async (req, res) => {
             return status
         })
         if(Check === true){
-            return res.status(400).send({status:false,message:`username ${req.body.username} ซ้ำ กรุณาเปลี่ยนใหม่`})
+            return res.status(200).send({status:false,message:`username ${req.body.username} ซ้ำ กรุณาเปลี่ยนใหม่`})
         }
         
         const data = new Admin({
@@ -70,15 +70,15 @@ module.exports.edit = async (req,res) =>{
     try{    
         if(req.body.username=== undefined || req.body.username ==='')
         {
-            res.status(400).send({status:false,message:"กรุณากรอก username"});
+            res.status(200).send({status:false,message:"กรุณากรอก username"});
         }
         if(req.body.name=== undefined || req.body.name ==='')
         {
-            res.status(400).send({status:false,message:"กรุณากรอก name"});
+            res.status(200).send({status:false,message:"กรุณากรอก name"});
         }
         if(req.params.id === undefined || req.params.id ==='')
         {
-            res.status(400).send({status:false,message:"กรุณาส่ง id มาใน paramsด้วย"});
+            res.status(200).send({status:false,message:"กรุณาส่ง id มาใน paramsด้วย"});
         }
         const admin = await Admin.findOne({_id:req.params.id})
         if(!admin)
@@ -102,7 +102,7 @@ module.exports.delete = async (req,res) =>{
     try{    
         const admindata = await Admin.findOne({_id:req.params.id})
         if(!admindata){
-            return res.status(404).send({status:false,message:"ไม่มีข้อมูล admin"})
+            return res.status(200).send({status:false,message:"ไม่มีข้อมูล admin"})
         }
         const deleteadmin = await Admin.findByIdAndDelete(req.params.id)
         return res.status(200).send({status:true,message:"ลบข้อมูลสำเร็จ",data:deleteadmin})

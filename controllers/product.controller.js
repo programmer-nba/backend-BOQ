@@ -6,12 +6,12 @@ module.exports.add = async (req, res) => {
     try {
         if(req.body.productname=== undefined || req.body.productname ==='')
         {
-            res.status(400).send({status:false,message:"กรุณากรอกชื่อสินค้า"});
+            res.status(200).send({status:false,message:"กรุณากรอกชื่อสินค้า"});
         }
         const type = await Type.findById(req.body.type_id)
         if(!type)
         {
-            res.status(400).send({status:false,message:"กรุณากรอกชื่อประเภทสินค้า หรือ หาไม่เจอ"});
+            res.status(200).send({status:false,message:"กรุณากรอกชื่อประเภทสินค้า หรือ หาไม่เจอ"});
         }
         const data = new Product({
             productname:req.body.productname,// (ชื่อสินค้า)
@@ -29,7 +29,7 @@ module.exports.getall = async (req,res) =>{
     try{    
         const productdata = await Product.find().populate('type_id')
         if(!productdata){
-            return res.status(404).send({status:false,message:"ไม่มีข้อมูลสินค้า"})
+            return res.status(200).send({status:false,message:"ไม่มีข้อมูลสินค้า"})
         }
         return res.status(200).send({status:true,data:productdata})
     }catch (error) {
@@ -42,7 +42,7 @@ module.exports.getbyid = async (req,res) =>{
     try{    
         const productdata = await Product.findOne({_id:req.params.id}).populate('type_id')
         if(!productdata){
-            return res.status(404).send({status:false,message:"ไม่มีข้อมูลสินค้า"})
+            return res.status(200).send({status:false,message:"ไม่มีข้อมูลสินค้า"})
         }
         return res.status(200).send({status:true,data:productdata})
     }catch (error) {
@@ -56,17 +56,17 @@ module.exports.edit = async (req,res) =>{
        
         if(req.body.productname=== undefined || req.body.productname ==='')
         {
-            res.status(400).send({status:false,message:"กรุณากรอกชื่อสินค้า"});
+            res.status(200).send({status:false,message:"กรุณากรอกชื่อสินค้า"});
         }
         const type = await Type.findById(req.body.type_id)
         if(!type)
         {
-            res.status(400).send({status:false,message:"กรุณากรอกชื่อประเภทสินค้า หรือ หาไม่เจอ"});
+            res.status(200).send({status:false,message:"กรุณากรอกชื่อประเภทสินค้า หรือ หาไม่เจอ"});
         }
         const product = await Product.findOne({_id:req.params.id})
         if(!product)
         {
-            return res.status(404).send({status:false,message:"ไม่มีข้อมูลสินค้า"})
+            return res.status(200).send({status:false,message:"ไม่มีข้อมูลสินค้า"})
         }
         const data ={
             productname:req.body.name,// (ชื่อสินค้า)
@@ -84,7 +84,7 @@ module.exports.delete = async (req,res) =>{
     try{    
         const productdata = await Product.findOne({_id:req.params.id})
         if(!productdata){
-            return res.status(404).send({status:false,message:"ไม่มีข้อมูลสินค้า"})
+            return res.status(200).send({status:false,message:"ไม่มีข้อมูลสินค้า"})
         }
         const deleteproduct = await Product.findByIdAndDelete(req.params.id)
         return res.status(200).send({status:true,message:"ลบข้อมูลสำเร็จ",data:deleteproduct})

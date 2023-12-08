@@ -16,7 +16,7 @@ module.exports.Create = async (req, res) => {
 
     const employee = await Employee.findById(id);
     if(!employee){
-      return res.status(404).send(`employee id ${id} not found`);
+      return res.status(200).send(`employee id ${id} not found`);
     }
     let upload = multer({ storage: storage }).array("signaturepic", 20);
     upload(req, res, async function (err) {
@@ -28,7 +28,7 @@ module.exports.Create = async (req, res) => {
       }
 
       if (!req.files) {
-        res.status(500).send({ message: "มีบางอย่างผิดพลาด", status: false });
+        res.status(200).send({ message: "มีบางอย่างผิดพลาด", status: false });
       } else {
         const url = req.protocol + "://" + req.get("host");
         for (var i = 0; i < req.files.length; i++) {
@@ -70,7 +70,7 @@ module.exports.Delete = async (req,res) =>{
     const employee = await Employee.findById(id);
 
     if(!employee){
-      return res.status(404).send(`employee ${id} not found`);
+      return res.status(200).send(`employee ${id} not found`);
     }
 
     await deleteFile(pictureid);

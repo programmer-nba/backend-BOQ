@@ -6,7 +6,7 @@ module.exports.add = async (req, res) => {
     try {
         if(req.body.name=== undefined || req.body.name ==='')
         {
-            res.status(400).send({status:false,message:"กรุณากรอกชื่อประเภทสินค้า"});
+            res.status(200).send({status:false,message:"กรุณากรอกชื่อประเภทสินค้า"});
         }
         const data = new Type({
             name:req.body.name
@@ -23,7 +23,7 @@ module.exports.getall = async (req,res) =>{
     try{    
         const typedata = await Type.find()
         if(!typedata){
-            return res.status(404).send({status:false,message:"ไม่มีข้อมูลประเภทนี้"})
+            return res.status(200).send({status:false,message:"ไม่มีข้อมูลประเภทนี้"})
         }
         return res.status(200).send({status:true,data:typedata})
     }catch (error) {
@@ -36,7 +36,7 @@ module.exports.getbyid = async (req,res) =>{
     try{    
         const typedata = await Type.findOne({_id:req.params.id})
         if(!typedata){
-            return res.status(404).send({status:false,message:"ไม่มีข้อมูลประเภทนี้"})
+            return res.status(200).send({status:false,message:"ไม่มีข้อมูลประเภทนี้"})
         }
         return res.status(200).send({status:true,data:typedata})
     }catch (error) {
@@ -50,12 +50,12 @@ module.exports.edit = async (req,res) =>{
        
         if(req.body.name=== undefined || req.body.name ==='')
         {
-            res.status(400).send({status:false,message:"กรุณากรอกชื่อประเภท"});
+            res.status(200).send({status:false,message:"กรุณากรอกชื่อประเภท"});
         }
         const type = await Type.findOne({_id:req.params.id})
         if(!type)
         {
-            return res.status(404).send({status:false,message:"ไม่มีข้อมูลชื่อประเภท"})
+            return res.status(200).send({status:false,message:"ไม่มีข้อมูลชื่อประเภท"})
         }
         const data ={
             name:req.body.name
@@ -72,7 +72,7 @@ module.exports.delete = async (req,res) =>{
     try{    
         const typedata = await Type.findOne({_id:req.params.id})
         if(!typedata){
-            return res.status(404).send({status:false,message:"ไม่มีข้อมูลประเภทสินค้า"})
+            return res.status(200).send({status:false,message:"ไม่มีข้อมูลประเภทสินค้า"})
         }
         const deletetype = await Type.findByIdAndDelete(req.params.id)
         return res.status(200).send({status:true,message:"ลบข้อมูลสำเร็จ",data:deletetype})

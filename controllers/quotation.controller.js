@@ -28,7 +28,7 @@ module.exports.getall = async (req,res) =>{
     try{    
         const quotationdata = await Quotation.find()
         if(!quotationdata){
-            return res.status(404).send({status:false,message:"ไม่มีข้อมูลใบประมาณราคา"})
+            return res.status(200).send({status:false,message:"ไม่มีข้อมูลใบประมาณราคา"})
         }
         return res.status(200).send({status:true,data:quotationdata})
     }catch (error) {
@@ -41,25 +41,25 @@ module.exports.getbyid = async (req,res) =>{
     try{    
         const quotationdata = await Quotation.findOne({_id:req.params.id})
         if(!quotationdata){
-            return res.status(404).send({status:false,message:"ไม่มีข้อมูลใบประมาณราคา"})
+            return res.status(200).send({status:false,message:"ไม่มีข้อมูลใบประมาณราคา"})
         }
         return res.status(200).send({status:true,data:quotationdata})
     }catch (error) {
         return res.status(500).send({status:false,error:error.message});
     }
 }
-//ยังไม่ได้ทำ
+
 //แก้ไขข้อมูลใบประมาณราคา
 module.exports.edit = async (req,res) =>{
     try{    
         if(!req.params.id ||req.params.id ===''||req.params.id === undefined)
         {
-            return res.status(400).send({status:false,message:"กรุณาส่ง id มาด้วย"})
+            return res.status(200).send({status:false,message:"กรุณาส่ง id มาด้วย"})
         }
         const quotation = await Quotation.findOne({_id:req.params.id})
         if(!quotation)
         {
-            return res.status(400).send({status:false,message:"ไม่มี id นี้ในฐานข้อมูล"})
+            return res.status(200).send({status:false,message:"ไม่มี id นี้ในฐานข้อมูล"})
         }
         const data ={
             projectname:req.body.projectname, //(ชื่อโครงการ)
@@ -70,7 +70,6 @@ module.exports.edit = async (req,res) =>{
             total: req.body.total,//(ราคารวมทั้งหมด)
             listproduct: req.body.listproduct
         }
-        console.log("test")
         const edit = await Quotation.findByIdAndUpdate(req.params.id,data,{new:true})
         return res.status(200).send({status:true,data:edit,message:"แก้ไขข้อมูลสำเร็จ"})
     }catch (error) {
@@ -83,7 +82,7 @@ module.exports.delete = async (req,res) =>{
     try{    
         const quotationdata = await Quotation.findOne({_id:req.params.id})
         if(!quotationdata){
-            return res.status(404).send({status:false,message:"ไม่มีข้อมูลใบประมาณราคา"})
+            return res.status(200).send({status:false,message:"ไม่มีข้อมูลใบประมาณราคา"})
         }
         const deletequotation = await Quotation.findByIdAndDelete(req.params.id)
         return res.status(200).send({status:true,message:"ลบข้อมูลสำเร็จ",data:deletequotation})

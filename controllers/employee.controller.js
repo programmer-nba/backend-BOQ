@@ -9,21 +9,21 @@ module.exports.add = async (req, res) => {
     try {
         if(req.body.username=== undefined || req.body.username ==='')
         {
-            res.status(400).send({status:false,message:"กรุณากรอก username"});
+            res.status(200).send({status:false,message:"กรุณากรอก username"});
         }
         if(req.body.password=== undefined || req.body.password === '')
         {
-            res.status(400).send({status:false,message:"กรุณากรอก password"});
+            res.status(200).send({status:false,message:"กรุณากรอก password"});
         }
         if(req.body.name=== undefined || req.body.name ==='')
         {
-            res.status(400).send({status:false,message:"กรุณากรอก name"});
+            res.status(200).send({status:false,message:"กรุณากรอก name"});
         }
         const Check = await checkalluser.Checkusername(req.body.username).then((status)=>{
             return status
         })
         if(Check === true){
-            return res.status(400).send({status:false,message:`username ${req.body.username} ซ้ำ กรุณาเปลี่ยนใหม่`})
+            return res.status(200).send({status:false,message:`username ${req.body.username} ซ้ำ กรุณาเปลี่ยนใหม่`})
         }
         const data = new Employee({
             username:req.body.username,
@@ -42,7 +42,7 @@ module.exports.getall = async (req,res) =>{
     try{    
         const employeedata = await Employee.find()
         if(!employeedata){
-            return res.status(404).send({status:false,message:"ไม่มีข้อมูล Employee"})
+            return res.status(200).send({status:false,message:"ไม่มีข้อมูล Employee"})
         }
         return res.status(200).send({status:true,data:employeedata})
     }catch (error) {
@@ -55,7 +55,7 @@ module.exports.getbyid = async (req,res) =>{
     try{    
         const employeedata = await Employee.findOne({_id:req.params.id})
         if(!employeedata){
-            return res.status(404).send({status:false,message:"ไม่มีข้อมูล Employee"})
+            return res.status(200).send({status:false,message:"ไม่มีข้อมูล Employee"})
         }
         return res.status(200).send({status:true,data:employeedata})
     }catch (error) {
@@ -68,20 +68,20 @@ module.exports.edit = async (req,res) =>{
     try{    
         if(req.body.username=== undefined || req.body.username ==='')
         {
-            res.status(400).send({status:false,message:"กรุณากรอก username"});
+            res.status(200).send({status:false,message:"กรุณากรอก username"});
         }
         if(req.body.name=== undefined || req.body.name ==='')
         {
-            res.status(400).send({status:false,message:"กรุณากรอก name"});
+            res.status(200).send({status:false,message:"กรุณากรอก name"});
         }
         if(req.params.id === undefined || req.params.id ==='')
         {
-            res.status(400).send({status:false,message:"กรุณาส่ง id มาใน paramsด้วย"});
+            res.status(200).send({status:false,message:"กรุณาส่ง id มาใน paramsด้วย"});
         }
         const employee = await Employee.findOne({_id:req.params.id})
         if(!employee)
         {
-            return res.status(404).send({status:false,message:"ไม่มีข้อมูล Employee"})
+            return res.status(200).send({status:false,message:"ไม่มีข้อมูล Employee"})
         }
         const changesignature = (req.body.changesignature!= undefined && req.body.changesignature!=""? req.body.changesignature:false)
         if(changesignature === true)
@@ -110,7 +110,7 @@ module.exports.delete = async (req,res) =>{
     try{    
         const employeedata = await Employee.findOne({_id:req.params.id})
         if(!employeedata){
-            return res.status(404).send({status:false,message:"ไม่มีข้อมูล Employee"})
+            return res.status(200).send({status:false,message:"ไม่มีข้อมูล Employee"})
         }
         if(employeedata.signature!='')
         {
