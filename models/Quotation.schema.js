@@ -10,16 +10,21 @@ const QuotationSchema = new mongoose.Schema(
     listproduct: {
         type:[
             {
-                product_id:{type: mongoose.Schema.Types.ObjectId,ref:'product'}, //รหัสสินค้า
-                type_id:{type:mongoose.Schema.Types.ObjectId,ref:'type'},
-                unit_id:{type:mongoose.Schema.Types.ObjectId,ref:'unit'},
+              type_id:{type:mongoose.Schema.Types.ObjectId,ref:'type'},
+              type_name:{type:String},
+              product:[{
+                product_id:{type: mongoose.Schema.Types.ObjectId,ref:'product'},
+                productname:{type:String},
                 quantity:{type:Number},// จำนวน
+                unit_id:{type:mongoose.Schema.Types.ObjectId,ref:'unit'}, //หน่วย
+                unit_name:{type:String},
                 materialprice:{type:Number}, // ราคาต่อชิ้น (สินค้า)
                 materialamount:{type:Number}, // ราคารวม (สินค้า)
                 wageprice : {type:Number},// ราคาค่าแรงต่อจำนวน
                 wageamount :{type:Number}, // ราคาค่าแรงรวม 
                 totalcost: {type:Number},// รวมค่าวัสดุและค่าแรงงาน
                 note :{type:Number}// หมายเหตุ
+              }]  
             }
         ]}, //(รายการสินค้า) (ข้อมูล array)
     materialcostandwage : {type:Number},// (ค่าวัสดุ + ค่าแรง)

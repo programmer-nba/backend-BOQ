@@ -26,12 +26,7 @@ module.exports.add = async (req, res) => {
 //ดึงข้อมูลทั้งหมด
 module.exports.getall = async (req,res) =>{
     try{    
-        const quotationdata = await Quotation.find().populate('employee_id').populate({ 
-            path: "listproduct.product_id", 
-            populate: [
-              { path: "type_id" } 
-            ]
-          }).populate({path: "listproduct.unit_id"}).populate({path: "listproduct.type_id"});
+        const quotationdata = await Quotation.find()
         if(!quotationdata){
             return res.status(404).send({status:false,message:"ไม่มีข้อมูลใบประมาณราคา"})
         }
@@ -44,13 +39,7 @@ module.exports.getall = async (req,res) =>{
 //ดึงข้อมูล by id
 module.exports.getbyid = async (req,res) =>{
     try{    
-        const quotationdata = await Quotation.findOne({_id:req.params.id}).populate({ 
-            path: "listproduct.product_id", 
-            populate: [
-              { path: "unit_id" },
-              { path: "type_id" } 
-            ]
-          }).populate({path: "listproduct.unit_id"}).populate({path: "listproduct.type_id"});
+        const quotationdata = await Quotation.findOne({_id:req.params.id})
         if(!quotationdata){
             return res.status(404).send({status:false,message:"ไม่มีข้อมูลใบประมาณราคา"})
         }
