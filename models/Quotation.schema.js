@@ -24,7 +24,7 @@ const QuotationSchema = new mongoose.Schema(
                 wageamount :{type:Number}, // ราคาค่าแรงรวม 
                 totalcost: {type:Number},// รวมค่าวัสดุและค่าแรงงาน
                 note :{type:Number}// หมายเหตุ
-              }]  
+              }]
             }
         ]}, //(รายการสินค้า) (ข้อมูล array)
     materialcostandwage : {type:Number},// (ค่าวัสดุ + ค่าแรง)
