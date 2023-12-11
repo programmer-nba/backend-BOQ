@@ -23,7 +23,7 @@ const QuotationSchema = new mongoose.Schema(
                 wageprice : {type:Number},// ราคาค่าแรงต่อจำนวน
                 wageamount :{type:Number}, // ราคาค่าแรงรวม 
                 totalcost: {type:Number},// รวมค่าวัสดุและค่าแรงงาน
-                note :{type:Number}// หมายเหตุ
+                note :{type:String}// หมายเหตุ
               }]
             }
         ]}, //(รายการสินค้า) (ข้อมูล array)
