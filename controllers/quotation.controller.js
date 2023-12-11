@@ -26,7 +26,7 @@ module.exports.add = async (req, res) => {
 //ดึงข้อมูลทั้งหมด
 module.exports.getall = async (req,res) =>{
     try{    
-        const quotationdata = await Quotation.find()
+        const quotationdata = await Quotation.find().populate('employee_id')
         if(!quotationdata){
             return res.status(200).send({status:false,message:"ไม่มีข้อมูลใบประมาณราคา"})
         }
@@ -39,7 +39,7 @@ module.exports.getall = async (req,res) =>{
 //ดึงข้อมูล by id
 module.exports.getbyid = async (req,res) =>{
     try{    
-        const quotationdata = await Quotation.findOne({_id:req.params.id})
+        const quotationdata = await Quotation.findOne({_id:req.params.id}).populate('employee_id')
         if(!quotationdata){
             return res.status(200).send({status:false,message:"ไม่มีข้อมูลใบประมาณราคา"})
         }
