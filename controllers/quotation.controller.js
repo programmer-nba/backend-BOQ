@@ -21,10 +21,10 @@ module.exports.add = async (req, res) => {
           });
         const currentDate = new Date().toISOString().slice(0, 10).replace(/-/g, '');
         const referenceNumber = String(quotationdata.length).padStart(5, '0')
-        const generatedRef = `${currentDate}${referenceNumber}`
-        console.log(generatedRef)
+        const invoiceNo = `${currentDate}${referenceNumber}`
+        console.log(invoiceNo)
         const data = new Quotation({
-            ref: generatedRef,
+            invoiceNo: invoiceNo,
             projectname:req.body.projectname, //(ชื่อโครงการ)
             projectowner:req.body.projectowner, //(เจ้าของโครงการ)
             constructionsite:req.body.constructionsite,//(สถานที่ก่อสร้าง)

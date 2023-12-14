@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 // Define the schema for the HotelUser entity
 const QuotationSchema = new mongoose.Schema(
   {
-    ref:{type:String,required:true},
+    invoiceNo:{type:String,required:true},
     projectname:{type:String,required: true}, //(ชื่อโครงการ)
     projectowner:{type:String,required: true},// (เจ้าของโครงการ)
     constructionsite:{type:String,required: true},//(สถานที่ก่อสร้าง)
