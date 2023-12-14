@@ -5,7 +5,26 @@ const Quotation = require('../models/Quotation.schema');
 //สร้างใบประมาณราคา
 module.exports.add = async (req, res) => {
     try {
+        
+        const startDate = new Date();
+        // สร้างวันที่ของวันถัดไป
+        const endDate = new Date();
+        endDate.setDate(endDate.getDate() + 1);
+        // ปรับเวลาให้เป็นเริ่มต้นของวัน
+        startDate.setHours(0, 0, 0, 0);
+        endDate.setHours(0, 0, 0, 0);
+        const quotationdata = await Quotation.find({
+            createdAt: {
+              $gte: startDate,
+              $lt: endDate
+            }
+          });
+        const currentDate = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+        const referenceNumber = String(quotationdata.length).padStart(5, '0')
+        const generatedRef = `${currentDate}${referenceNumber}`
+        console.log(generatedRef)
         const data = new Quotation({
+            ref: generatedRef,
             projectname:req.body.projectname, //(ชื่อโครงการ)
             projectowner:req.body.projectowner, //(เจ้าของโครงการ)
             constructionsite:req.body.constructionsite,//(สถานที่ก่อสร้าง)
@@ -16,6 +35,8 @@ module.exports.add = async (req, res) => {
             employee_id: req.body.employee_id, // (รหัสพนักงาน)
             listproduct: req.body.listproduct
         })
+
+
         const add = await data.save()
         res.status(200).send({status:true,message:"คุณได้สร้างใบประมาณราคาเรียบร้อย",data:add});
       } catch (error) {
