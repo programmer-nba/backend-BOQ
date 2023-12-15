@@ -2,27 +2,54 @@ const Product = require('../models/product.schema')
 const Type =require('../models/type.schema')
 const Unit = require('../models/unit.schema')
 const Quotation = require('../models/Quotation.schema');
+
+function generateRandomNumber(length) {
+    let result = '';
+    for (let i = 0; i < length; i++) {
+      result += Math.floor(Math.random() * 10); // เลขสุ่ม 0-9
+    }
+    return result;
+  }
 //สร้างใบประมาณราคา
 module.exports.add = async (req, res) => {
     try {
         
-        const startDate = new Date();
-        // สร้างวันที่ของวันถัดไป
-        const endDate = new Date();
-        endDate.setDate(endDate.getDate() + 1);
-        // ปรับเวลาให้เป็นเริ่มต้นของวัน
-        startDate.setHours(0, 0, 0, 0);
-        endDate.setHours(0, 0, 0, 0);
-        const quotationdata = await Quotation.find({
-            createdAt: {
-              $gte: startDate,
-              $lt: endDate
+        // const startDate = new Date();
+        // // สร้างวันที่ของวันถัดไป
+        // const endDate = new Date();
+        // endDate.setDate(endDate.getDate() + 1);
+        // // ปรับเวลาให้เป็นเริ่มต้นของวัน
+        // startDate.setHours(0, 0, 0, 0);
+        // endDate.setHours(0, 0, 0, 0);
+        // const quotationdata = await Quotation.find({
+        //     createdAt: {
+        //       $gte: startDate,
+        //       $lt: endDate
+        //     }
+        //   });
+        // const currentDate = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+        // const referenceNumber = String(quotationdata.length).padStart(5, '0')
+        // const invoiceNo = `${currentDate}${referenceNumber}`
+        // console.log(invoiceNo)
+        let loop = true
+        let invoiceNo = generateRandomNumber(13)
+        let num = 0
+        while(loop ===true)
+        {
+            const quantitydata = await Quotation.findOne({invoiceNo:invoiceNo})
+            if(quantitydata)
+            {
+                invoiceNo = generateRandomNumber(13)
+            }else{
+                loop = false
             }
-          });
-        const currentDate = new Date().toISOString().slice(0, 10).replace(/-/g, '');
-        const referenceNumber = String(quotationdata.length).padStart(5, '0')
-        const invoiceNo = `${currentDate}${referenceNumber}`
-        console.log(invoiceNo)
+            num = num + 1
+            if(num == 100)
+            {
+                loop = false
+            }
+        }
+        
         const data = new Quotation({
             invoiceNo: invoiceNo,
             projectname:req.body.projectname, //(ชื่อโครงการ)
