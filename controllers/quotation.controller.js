@@ -31,25 +31,30 @@ module.exports.add = async (req, res) => {
         // const referenceNumber = String(quotationdata.length).padStart(5, '0')
         // const invoiceNo = `${currentDate}${referenceNumber}`
         // console.log(invoiceNo)
-        let loop = true
-        let invoiceNo = generateRandomNumber(13)
-        let num = 0
-        while(loop ===true)
-        {
-            const quantitydata = await Quotation.findOne({invoiceNo:invoiceNo})
-            if(quantitydata)
-            {
-                invoiceNo = generateRandomNumber(13)
-            }else{
-                loop = false
-            }
-            num = num + 1
-            if(num == 100)
-            {
-                loop = false
-            }
-        }
+
+
+       
+        // let loop = true
+        // let invoiceNo = generateRandomNumber(13)
+        // let num = 0
+        // while(loop ===true)
+        // {
+        //     const quantitydata = await Quotation.findOne({invoiceNo:invoiceNo})
+        //     if(quantitydata)
+        //     {
+        //         invoiceNo = generateRandomNumber(13)
+        //     }else{
+        //         loop = false
+        //     }
+        //     num = num + 1
+        //     if(num == 100)
+        //     {
+        //         loop = false
+        //     }
+        // }
         
+        const quotationdata = await Quotation.find()
+        const invoiceNo = String(quotationdata.length+1).padStart(5, '0')
         const data = new Quotation({
             invoiceNo: invoiceNo,
             projectname:req.body.projectname, //(ชื่อโครงการ)
