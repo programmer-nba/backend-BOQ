@@ -69,7 +69,7 @@ module.exports.edit = async (req,res) =>{
             return res.status(200).send({status:false,message:"ไม่มีข้อมูลสินค้า"})
         }
         const data ={
-            productname:req.body.name,// (ชื่อสินค้า)
+            productname:req.body.productname,// (ชื่อสินค้า)
             type_id:req.body.type_id, // (รหัสประเภท)  // join กับ type 
         }
         const edit = await Product.findByIdAndUpdate(req.params.id,data,{new:true})
