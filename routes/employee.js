@@ -6,7 +6,7 @@ const Employee = require('../controllers/employee.controller')
 
 
 //สร้างรหัส Employee 
-router.post('/',adminAuth,Employee.add)
+router.post('/',EmployeeAuth.all,Employee.add)
 //ดึงข้อมูลทั้งหมด
 router.get('/',EmployeeAuth.all,Employee.getall)
 //ดึงข้อมูล by id

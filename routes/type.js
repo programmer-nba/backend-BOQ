@@ -5,14 +5,14 @@ const employeeAuth = require('../authentication/employeeAuth')
 const type = require('../controllers/type.controller')
 
 //สร้างรหัส type  
-router.post('/',adminAuth,type.add)
+router.post('/',employeeAuth.all,type.add)
 //ดึงข้อมูลทั้งหมด
 router.get('/',employeeAuth.all,type.getall)
 //ดึงข้อมูล by id
 router.get('/byid/:id',employeeAuth.all,type.getbyid)
 // แก้ไขข้อมูล type  
-router.put('/:id',adminAuth,type.edit)
+router.put('/:id',employeeAuth.all,type.edit)
 // ลบข้อมูล type 
-router.delete('/:id',adminAuth,type.delete)
+router.delete('/:id',employeeAuth.all,type.delete)
 
 module.exports = router;
