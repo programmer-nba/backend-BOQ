@@ -61,9 +61,9 @@ module.exports.add = async (req, res) => {
             projectowner:req.body.projectowner, //(เจ้าของโครงการ)
             constructionsite:req.body.constructionsite,//(สถานที่ก่อสร้าง)
             datequotation:req.body.datequotation, //(วันที่ออก)
-            materialcostandwage: req.body.materialcostandwage, // (ค่าวัสดุ + ค่าแรง)
-            admincost : req.body.admincost,// (ค่าดำเนินการ)
-            total: req.body.total,//(ราคารวมทั้งหมด)
+            materialcostandwage: parseFloat(req.body.materialcostandwage.toFixed(2)), // (ค่าวัสดุ + ค่าแรง)
+            admincost : parseFloat(req.body.admincost.toFixed(2)) ,// (ค่าดำเนินการ)
+            total: parseFloat(req.body.total.toFixed(2)),//(ราคารวมทั้งหมด)
             employee_id: req.body.employee_id, // (รหัสพนักงาน)
             listproduct: req.body.listproduct
         })
@@ -83,6 +83,8 @@ module.exports.getall = async (req,res) =>{
         if(!quotationdata){
             return res.status(200).send({status:false,message:"ไม่มีข้อมูลใบประมาณราคา"})
         }
+        
+        
         return res.status(200).send({status:true,data:quotationdata})
     }catch (error) {
         return res.status(500).send({status:false,error:error.message});
@@ -118,9 +120,9 @@ module.exports.edit = async (req,res) =>{
             projectname:req.body.projectname, //(ชื่อโครงการ)
             projectowner:req.body.projectowner, //(เจ้าของโครงการ)
             constructionsite:req.body.constructionsite,//(สถานที่ก่อสร้าง)
-            materialcostandwage: req.body.materialcostandwage, // (ค่าวัสดุ + ค่าแรง)
-            admincost : req.body.admincost,// (ค่าดำเนินการ)
-            total: req.body.total,//(ราคารวมทั้งหมด)
+            materialcostandwage: parseFloat(req.body.materialcostandwage.toFixed(2)), // (ค่าวัสดุ + ค่าแรง)
+            admincost : parseFloat(req.body.admincost.toFixed(2)) ,// (ค่าดำเนินการ)
+            total: parseFloat(req.body.total.toFixed(2)),//(ราคารวมทั้งหมด)
             listproduct: req.body.listproduct
         }
         const edit = await Quotation.findByIdAndUpdate(req.params.id,data,{new:true})
