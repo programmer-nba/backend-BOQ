@@ -43,6 +43,8 @@ app.use(prefix+'/product',require('./routes/product'));
 app.use(prefix+'/quotation',require('./routes/quotation'));
 ////
 app.use(prefix+'/login', require('./routes/login'))
+////
+app.use(prefix+'/percent', require('./routes/percent'))
 
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*'); // หรือกำหนด origin ที่เฉพาะเจาะจง
