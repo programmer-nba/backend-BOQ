@@ -65,7 +65,8 @@ module.exports.add = async (req, res) => {
             admincost : parseFloat(req.body.admincost.toFixed(2)) ,// (ค่าดำเนินการ)
             total: parseFloat(req.body.total.toFixed(2)),//(ราคารวมทั้งหมด)
             employee_id: req.body.employee_id, // (รหัสพนักงาน)
-            listproduct: req.body.listproduct
+            listproduct: req.body.listproduct,
+            percent_id:req.body.percent_id
         })
 
 
@@ -79,7 +80,7 @@ module.exports.add = async (req, res) => {
 //ดึงข้อมูลทั้งหมด
 module.exports.getall = async (req,res) =>{
     try{    
-        const quotationdata = await Quotation.find().populate('employee_id')
+        const quotationdata = await Quotation.find().populate('employee_id').populate('percent_id')
         if(!quotationdata){
             return res.status(200).send({status:false,message:"ไม่มีข้อมูลใบประมาณราคา"})
         }
@@ -94,7 +95,7 @@ module.exports.getall = async (req,res) =>{
 //ดึงข้อมูล by id
 module.exports.getbyid = async (req,res) =>{
     try{    
-        const quotationdata = await Quotation.findOne({_id:req.params.id}).populate('employee_id')
+        const quotationdata = await Quotation.findOne({_id:req.params.id}).populate('employee_id').populate('percent_id')
         if(!quotationdata){
             return res.status(200).send({status:false,message:"ไม่มีข้อมูลใบประมาณราคา"})
         }
@@ -123,7 +124,8 @@ module.exports.edit = async (req,res) =>{
             materialcostandwage: parseFloat(req.body.materialcostandwage.toFixed(2)), // (ค่าวัสดุ + ค่าแรง)
             admincost : parseFloat(req.body.admincost.toFixed(2)) ,// (ค่าดำเนินการ)
             total: parseFloat(req.body.total.toFixed(2)),//(ราคารวมทั้งหมด)
-            listproduct: req.body.listproduct
+            listproduct: req.body.listproduct,
+            percent_id:req.body.percent_id
         }
         const edit = await Quotation.findByIdAndUpdate(req.params.id,data,{new:true})
         return res.status(200).send({status:true,data:edit,message:"แก้ไขข้อมูลสำเร็จ"})

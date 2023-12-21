@@ -30,6 +30,7 @@ const QuotationSchema = new mongoose.Schema(
         ]}, //(รายการสินค้า) (ข้อมูล array)
     materialcostandwage : {type:Number},// (ค่าวัสดุ + ค่าแรง)
     admincost :{type:Number}, // (ค่าดำเนินการ)
+    percent_id:{type: mongoose.Schema.Types.ObjectId,ref:'percent',default:null},
     total:{type:Number},//(ราคารวมทั้งหมด)
     employee_id :{type: mongoose.Schema.Types.ObjectId,ref:'employee',required:true} // (รหัสพนักงาน)
   },
