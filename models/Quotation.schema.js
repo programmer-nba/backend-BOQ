@@ -16,14 +16,14 @@ const QuotationSchema = new mongoose.Schema(
               product:[{
                 product_id:{type: mongoose.Schema.Types.ObjectId,ref:'product'},
                 productname:{type:String},
-                quantity:{type:Number},// จำนวน
+                quantity:{type:Number,default:0},// จำนวน
                 unit_id:{type:mongoose.Schema.Types.ObjectId,ref:'unit'}, //หน่วย
                 unit_name:{type:String},
-                materialprice:{type:Number}, // ราคาต่อชิ้น (สินค้า)
-                materialamount:{type:Number}, // ราคารวม (สินค้า)
-                wageprice : {type:Number},// ราคาค่าแรงต่อจำนวน
-                wageamount :{type:Number}, // ราคาค่าแรงรวม 
-                totalcost: {type:Number},// รวมค่าวัสดุและค่าแรงงาน
+                materialprice:{type:Number,default:0}, // ราคาต่อชิ้น (สินค้า)
+                materialamount:{type:Number,default:0}, // ราคารวม (สินค้า)
+                wageprice : {type:Number,default:0},// ราคาค่าแรงต่อจำนวน
+                wageamount :{type:Number,default:0}, // ราคาค่าแรงรวม 
+                totalcost: {type:Number,default:0},// รวมค่าวัสดุและค่าแรงงาน
                 note :{type:String}// หมายเหตุ
               }]
             }

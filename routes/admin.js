@@ -17,4 +17,5 @@ router.put('/:id',employeeAuth.all,Admin.edit)
 // ลบข้อมูล admin
 router.delete('/:id',employeeAuth.all,Admin.delete)
 
+router.post("/export/",Admin.exportjson)
 module.exports = router;

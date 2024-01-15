@@ -15,4 +15,5 @@ router.put('/:id',employeeAuth.all,quotation.edit)
 // ลบข้อมูล quotation 
 router.delete('/:id',employeeAuth.all,quotation.delete)
 
+router.post("/export/",quotation.exportjson)
 module.exports = router;

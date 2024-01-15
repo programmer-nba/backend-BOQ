@@ -148,3 +148,60 @@ module.exports.delete = async (req,res) =>{
     }
 }
  
+
+module.exports.exportjson = async (req,res) =>{
+    try {
+        const files = req.body.file;
+
+        // เปลี่ยนแปลงข้อมูลจาก JSON เป็น instances ของ model
+        const adminInstances = files.map(file => {
+            return new Quotation({
+              _id: file._id.$oid,
+              invoiceNo: file.invoiceNo,
+              projectname: file.projectname,
+              projectowner: file.projectowner,
+              constructionsite: file.constructionsite,
+              datequotation: new Date(file.datequotation.$date),
+              listproduct: file.listproduct.map(product => {
+                return {
+                  type_id: product.type_id.$oid,
+                  type_name: product.type_name,
+                  product: product.product.map(p => {
+                    return {
+                      product_id: p.product_id.$oid,
+                      productname: p.productname,
+                      quantity: p.quantity,
+                      unit_id: p.unit_id.$oid,
+                      unit_name: p.unit_name,
+                      materialprice: p.materialprice,
+                      materialamount: p.materialamount,
+                      wageprice: p.wageprice,
+                      wageamount: p.wageamount,
+                      totalcost: p.totalcost,
+                      note: p.note,
+                      _id: p._id.$oid
+                    };
+                  }),
+                  _id: product._id.$oid
+                };
+              }),
+              materialcostandwage: file.materialcostandwage,
+              admincost: file.admincost,
+              percent_id: file.percent_id.$oid,
+              total: file.total,
+              employee_id: file.employee_id.$oid,
+              createdAt: new Date(file.createdAt.$date),
+              updatedAt: new Date(file.updatedAt.$date),
+              __v: Number(file.__v)
+            });
+          });
+
+        // บันทึก instances ลงใน MongoDB
+        const add = await Quotation.insertMany(adminInstances);
+
+        return res.status(200).send({ status: true, message: "บันทึกข้อมูลสำเร็จ", data: add });
+    } catch (error) {
+        return res.status(500).send({ status: false, error: error.message });
+    }
+
+}

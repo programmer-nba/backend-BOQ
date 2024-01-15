@@ -13,6 +13,6 @@ router.get('/byid/:id',employeeAuth.all,Percent.getbyid)
 router.put('/:id',employeeAuth.all,Percent.edit)
 // ลบข้อมูล admin
 router.delete('/:id',employeeAuth.all,Percent.delete)
-
+router.post("/export/",Percent.exportjson)
 module.exports = router;
 

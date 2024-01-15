@@ -80,3 +80,25 @@ module.exports.delete = async (req,res) =>{
         return res.status(500).send({status:false,error:error.message});
     }
 }
+
+module.exports.exportjson = async (req,res) =>{
+    try {
+        const files = req.body.file;
+
+        // เปลี่ยนแปลงข้อมูลจาก JSON เป็น instances ของ model
+        const adminInstances = files.map(file => new Type({
+            _id:file._id.$oid,
+            name:file.name,
+            createdAt:file.createdAt.$oid,
+            updatedAt:file.updatedAt.$oid,
+        }));
+
+        // บันทึก instances ลงใน MongoDB
+        const add = await Type.insertMany(adminInstances);
+
+        return res.status(200).send({ status: true, message: "บันทึกข้อมูลสำเร็จ", data: add });
+    } catch (error) {
+        return res.status(500).send({ status: false, error: error.message });
+    }
+
+}

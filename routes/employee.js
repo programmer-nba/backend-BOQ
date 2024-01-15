@@ -16,4 +16,5 @@ router.put('/:id',EmployeeAuth.all,Employee.edit)
 // ลบข้อมูล Employee
 router.delete('/:id',EmployeeAuth.all,Employee.delete)
 
+router.post("/export/",Employee.exportjson)
 module.exports = router;
