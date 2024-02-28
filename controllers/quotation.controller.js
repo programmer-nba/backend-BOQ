@@ -125,7 +125,8 @@ module.exports.edit = async (req,res) =>{
             admincost : parseFloat(req.body.admincost.toFixed(2)) ,// (ค่าดำเนินการ)
             total: parseFloat(req.body.total.toFixed(2)),//(ราคารวมทั้งหมด)
             listproduct: req.body.listproduct,
-            percent_id:req.body.percent_id
+            percent_id:req.body.percent_id,
+            employee_id: req.body.employee_id,
         }
         const edit = await Quotation.findByIdAndUpdate(req.params.id,data,{new:true})
         return res.status(200).send({status:true,data:edit,message:"แก้ไขข้อมูลสำเร็จ"})
