@@ -121,6 +121,7 @@ module.exports.edit = async (req,res) =>{
             projectname:req.body.projectname, //(ชื่อโครงการ)
             projectowner:req.body.projectowner, //(เจ้าของโครงการ)
             constructionsite:req.body.constructionsite,//(สถานที่ก่อสร้าง)
+            datequotation:req.body.datequotation, //(วันที่ออก)
             materialcostandwage: parseFloat(req.body.materialcostandwage.toFixed(2)), // (ค่าวัสดุ + ค่าแรง)
             admincost : parseFloat(req.body.admincost.toFixed(2)) ,// (ค่าดำเนินการ)
             total: parseFloat(req.body.total.toFixed(2)),//(ราคารวมทั้งหมด)
